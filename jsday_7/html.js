@@ -11,3 +11,12 @@ image.setAttribute("alt", "A beautiful scenery");
 
 const gallery = document.getElementById("gallery"); 
 gallery.appendChild(image); 
+
+setInterval(() => {
+    const date= new Date();
+    
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+    document.getElementById("clock").textContent = `Time: ${hours}:${minutes}:${seconds}`;
+}, 1000);
