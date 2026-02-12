@@ -1,74 +1,102 @@
-const eventForm = document.getElementById("eventForm");
-const eventContainer = document.getElementById("eventContainer");
-const clearAllBtn = document.getElementById("clearAllBtn");
-const addSampleBtn = document.getElementById("addSampleBtn");
-const demoContent = document.getElementById("demoContent");
+const eventForm = document.getElementById('eventForm');
+const eventTitle = document.getElementById('eventTitle');
+const eventDate = document.getElementById('eventDate');
+const eventCategory = document.getElementById('eventCategory');
+const eventDescription = document.getElementById('eventDescription');
+const eventContainer = document.getElementById('eventContainer');
+const clearAllBtn = document.getElementById('clearAllBtn');
+const addSampleBtn = document.getElementById('addSampleBtn');
+const demoContent = document.getElementById('demoContent');
 
+//take 2 sample events for Add sample event data
 
-
-eventForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const title = document.getElementById("eventTitle").value;
-    const date = document.getElementById("eventDate").value;
-    const category = document.getElementById("eventCategory").value;
-    const description = document.getElementById("eventDescription").value;
-
-    createEventCard(title, date, category, description);
-
-    eventForm.reset();
-    updateEmptyState();
-});
-
-
-
-function createEventCard(title, date, category, description) {
-
-    const card = document.createElement("div");
-    card.classList.add("event-card");
-
-    card.innerHTML = `
-        <h3>${title}</h3>
-        <p><strong>Date:</strong> ${date}</p>
-        <p><strong>Category:</strong> ${category}</p>
-        <p>${description}</p>
-        <button class="delete-btn">Delete</button>
-    `;
-
-   
-    card.querySelector(".delete-btn").addEventListener("click", function () {
-        card.remove();
-        updateEmptyState();
-    });
-
-    eventContainer.appendChild(card);
-
-    updateEmptyState();
-}
-
-function updateEmptyState() {
-    if (eventContainer.children.length === 0) {
-        eventContainer.innerHTML = `
-            <div class="empty-state">
-                No events yet. Add your first event!
-            </div>
-        `;
-    } else {
-        const empty = eventContainer.querySelector(".empty-state");
-        if (empty) empty.remove();
+let sampleEvent = [
+    {
+        title: "web dev",
+        date: "4-6-2026",
+        category: "workshop",
+        description: "ahgs h adg thai dgjabds"
+    },
+    {
+        title: "web dev2",
+        date: "4-7-2026",
+        category: "conference",
+        description: "ahgs dsfchjh adg thai dgjabds"
     }
+]
+
+addSampleBtn.addEventListener("click", () => {
+    sampleEvent.forEach(event => addEvent(event));
+})
+
+//Create event card which contains the user data and we store it inside a div.
+function createEventCard(eventData){
+    // ... (content of function not fully visible in right pane)
+    // ...
+    const card = document.createElement("div");
+    card.className = "event-card";
+    card.innerHTML = `
+        <button class="delete-btn">X</button>
+        <h3>${eventData.title}</h3>
+        <div>${eventData.date}</div>
+        <span>${eventData.category}</span>
+        <p>${eventData.description}</p>
+    `;
+    //return the card for the addEvent function
+    return card;
+}
+
+//Add the created event and append inside the event container
+function addEvent (eventData){
+    //if empty-state is present then remove it when new card will be added.
+    const emptyState = document.querySelector(".empty-state");
+    if (emptyState) emptyState.remove()
+    
+    eventContainer.appendChild(createEventCard(eventData));
+    
+}
+
+//form handling using submit event
+eventForm.addEventListener("submit", (event) => {
+    event.preventDefault()
+    
+    const eventData = {
+        //eventData stores the user given value
+        title: eventTitle.value,
+        date: eventDate.value,
+        category: eventCategory.value,
+        description: eventDescription.value
+    }
+    addEvent(eventData);
+    
+})
+
+eventContainer.addEventListener("click", (event) => {
+    const card = event.target.closest(".event-card");
+    if (card && event.target.classList.contains("delete-btn")) {
+        card.remove();
 }
 
 
-clearAllBtn.addEventListener("click", function () {
+
+
+
+
+clearAllBtn.addEventListener("click", () => {
     eventContainer.innerHTML = "";
-    updateEmptyState();
-});
+    //after clearing all the events we will show the empty state
+    demoContent.innerHTML = `
+        <div id="empty-state">
+            <h2>No events added yet!</h2>
+            <p>Use the form above to add your first event.</p>
+        </div>
+    `
+})})
 
-
-
-addSampleBtn.addEventListener("click", function () {
-    createEventCard("Tech Conference", "2026-03-15", "Conference", "A big tech networking event.");
-    createEventCard("Frontend Workshop", "2026-04-02", "Workshop", "Hands-on UI development.");
-    createEventCard("Startup Meetup", "2026-05-10", "Meetup", "Meet startup founders and investors.");
-});
+eventContainer.addEventListener("click", (event) => {
+    console.log("inside delete");
+    const card = event.target.closest(".event-card");
+    if (event.target.classList.contains("delete-btn")) {
+        card.remove();
+    }
+})
