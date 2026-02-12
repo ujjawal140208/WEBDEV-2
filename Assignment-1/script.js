@@ -46,10 +46,6 @@ function createEventCard(title, date, category, description) {
     updateEmptyState();
 }
 
-// =======================
-// EMPTY STATE HANDLER
-// =======================
-
 function updateEmptyState() {
     if (eventContainer.children.length === 0) {
         eventContainer.innerHTML = `
@@ -63,39 +59,16 @@ function updateEmptyState() {
     }
 }
 
-// =======================
-// CLEAR ALL EVENTS
-// =======================
 
 clearAllBtn.addEventListener("click", function () {
     eventContainer.innerHTML = "";
     updateEmptyState();
 });
 
-// =======================
-// ADD SAMPLE EVENTS
-// =======================
+
 
 addSampleBtn.addEventListener("click", function () {
     createEventCard("Tech Conference", "2026-03-15", "Conference", "A big tech networking event.");
     createEventCard("Frontend Workshop", "2026-04-02", "Workshop", "Hands-on UI development.");
     createEventCard("Startup Meetup", "2026-05-10", "Meetup", "Meet startup founders and investors.");
 });
-
-// =======================
-// KEYBOARD DEMO EFFECT
-// =======================
-
-document.addEventListener("keydown", function (e) {
-    demoContent.textContent = `You pressed: ${e.key}`;
-    demoContent.style.color = getRandomColor();
-});
-
-// =======================
-// RANDOM COLOR FUNCTION
-// =======================
-
-function getRandomColor() {
-    const colors = ["#0f3057", "#00587a", "#008891", "#1e88e5", "#1565c0"];
-    return colors[Math.floor(Math.random() * colors.length)];
-}
