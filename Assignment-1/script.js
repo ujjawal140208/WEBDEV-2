@@ -30,7 +30,7 @@ addSampleBtn.addEventListener("click", () => {
 })
 
 //Create event card which contains the user data and we store it inside a div.
-function createEventCard(eventData){
+function createEventCard(eventData) {
     // ... (content of function not fully visible in right pane)
     // ...
     const card = document.createElement("div");
@@ -47,19 +47,19 @@ function createEventCard(eventData){
 }
 
 //Add the created event and append inside the event container
-function addEvent (eventData){
+function addEvent(eventData) {
     //if empty-state is present then remove it when new card will be added.
     const emptyState = document.querySelector(".empty-state");
     if (emptyState) emptyState.remove()
-    
+
     eventContainer.appendChild(createEventCard(eventData));
-    
+
 }
 
 //form handling using submit event
 eventForm.addEventListener("submit", (event) => {
     event.preventDefault()
-    
+
     const eventData = {
         //eventData stores the user given value
         title: eventTitle.value,
@@ -68,30 +68,31 @@ eventForm.addEventListener("submit", (event) => {
         description: eventDescription.value
     }
     addEvent(eventData);
-    
+
 })
 
 eventContainer.addEventListener("click", (event) => {
     const card = event.target.closest(".event-card");
     if (card && event.target.classList.contains("delete-btn")) {
         card.remove();
-}
+    }
 
 
 
 
 
 
-clearAllBtn.addEventListener("click", () => {
-    eventContainer.innerHTML = "";
-    //after clearing all the events we will show the empty state
-    demoContent.innerHTML = `
+    clearAllBtn.addEventListener("click", () => {
+        eventContainer.innerHTML = "";
+        //after clearing all the events we will show the empty state
+        demoContent.innerHTML = `
         <div id="empty-state">
             <h2>No events added yet!</h2>
             <p>Use the form above to add your first event.</p>
         </div>
     `
-})})
+    })
+})
 
 eventContainer.addEventListener("click", (event) => {
     console.log("inside delete");
