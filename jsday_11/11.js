@@ -48,15 +48,13 @@ console.log(demo()); // it will return a promise.
 // await : it will pause the async function until the promise is resolved.
 
 
-async function getdata(){
-    const a = await pro;
-    console.log(a)
-    console.log("after promise");
+async function fetchData(){
+    try{
+        const response = await fetch("https://jsonplaceholder.typicode.com/posts/1");
+        const data = await response.json();
+        console.log(data);
+    }catch(error){
+        console.log(error);
+    }
 }
-
-getdata();
-
-
-fetch('https://jsonplaceholder.typicode.com/users')
-.then(response => response.json())
-.then(data => console.log(data))
+fetchData();
