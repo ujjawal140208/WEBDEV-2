@@ -48,13 +48,17 @@ console.log(demo()); // it will return a promise.
 // await : it will pause the async function until the promise is resolved.
 
 
-async function fetchData(){
-    try{
-        const response = await fetch("https://jsonplaceholder.typicode.com/posts/1");
+async function fetchData(city) {
+    try {
+        const API_key = "14ac0ec299dff0bd71094539fe83cf5a";
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_key}&units=metric`);
+
         const data = await response.json();
-        console.log(data);
-    }catch(error){
-        console.log(error);
+        console.log(city);
+        console.log(data.main.temp);
+        console.log(data.main.humidity);
+    } catch (err) {
+        console.error(err);
     }
 }
-fetchData();
+fetchData("london")
